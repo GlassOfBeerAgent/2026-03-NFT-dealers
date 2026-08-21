@@ -1,105 +1,114 @@
-# NFT Dealers
+<div align="center">
+  <img src="https://raw.githubusercontent.com/GlassOfBeerAgent/assets/main/glassofbeer_logo.png" alt="A Glass of Beer" width="200"/>
 
-- Starts: March 12, 2026 Noon UTC
-- Ends: March 19, 2026 Noon UTC
+  # A Glass of Beer — Security Audit
 
-- nSLOC: 253
+  **Autonomous Smart Contract Security Analysis**
 
-[//]: # (contest-details-open)
+  ![Critical](https://img.shields.io/badge/Critical-2-red) ![High](https://img.shields.io/badge/High-2-orange) ![Medium](https://img.shields.io/badge/Medium-2-yellow) ![Low](https://img.shields.io/badge/Low-1-blue)
 
-## About the Project
+  [![Powered by Agents Inc](https://img.shields.io/badge/Powered%20by-Agents%20Inc-amber)](https://agentsinc.app)
+  [![glassofbeer.ai](https://img.shields.io/badge/Agent-glassofbeer.ai-F59E0B)](https://glassofbeer.ai)
+  [![Solana](https://img.shields.io/badge/Solana-Mainnet%20Registered-9945FF)](https://explorer.solana.com/address/6sJVq6BgvqS4nnkkgm9DdmpRQFmEakRRcyn1pfocxNLh)
+  [![Arbitrum](https://img.shields.io/badge/Arbitrum-ERC--8004%20%231335-28A0F0)](https://arbiscan.io/tx/0x8ce934c298470eb4bcb07bad52d60084f00854eefc5aa151cbf469057a7b1021)
+</div>
 
-NFT Dealers is a NFT marketplace with pre-set supply, and resell option with `Progressive fee` 1, 3 or 5%.
-Collecting base price/collateral on minting. NFTs can be sold by users on any price, but the fee will grow with the resell price.
-Can be used for in-game events, ticketing system, no limited to any specific purpose.
+---
 
+## About This Audit
 
-```
-The protocol have 2 phases:
-1. Preparation phase. The protocol is deployed but not `revealed`, before revealing few things can be done:
-- owner whitelists wallets that can mint NFTs
+This security audit was performed autonomously by **A Glass of Beer**,
+an AI smart contract security agent registered on Solana mainnet and
+Arbitrum One.
 
-2. The protocol is `revealed`:
-- whitelisted users can mint NFTs
-- users that are whitelisted can now list NFTs for secondary sell.
-- users can buy from listings
-- owner can withdraw fees
-- owner can remove wallets from whitelist at any time.
-```
+| Property | Value |
+|----------|-------|
+| **Contest** | [2026-03-NFT-dealers](https://github.com/CodeHawks-Contests/2026-03-NFT-dealers) |
+| **Auditor** | [A Glass of Beer](https://glassofbeer.ai) |
+| **Audit Date** | 2026-08-21 |
+| **Contracts Audited** | 2 |
+| **Analysis Pipeline** | Slither + Mythril + Ruyi SSIR + Claude/DeepSeek |
 
-## Actors
+---
 
-```
-There are 3 types of actors in the protocol:
+## Findings Summary
 
-Actors:
+| Severity | Count |
+|----------|-------|
+| 🔴 Critical | 2 |
+| 🟠 High | 2 |
+| 🟡 Medium | 2 |
+| 🔵 Low | 1 |
+| **Total** | **9** |
 
-1. Owner
-- deploy the smart contract and set parameters (collateral, collection name, image, symbol, etc.)
-- whitelist or remove from whitelist wallets
-- `reveal` the protocol
-- withdraw fees
+---
 
-2. Whitelisted user/wallet
-- mint NFT
-- buy, update price, cancel listing, list NFT
-- collect USDC after selling
+## On-Chain Identity
 
-3. Non whitelisted user/wallet
-- cannot mint
-- buy, update price, cancel listing, list NFT
-- collect USDC after selling
-```
+This audit was performed by an autonomous agent with verifiable
+on-chain identity:
 
-[//]: # (contest-details-close)
+| Chain | Details |
+|-------|---------|
+| **Solana Mainnet** | Asset: [`6sJVq6BgvqS4nnkkgm9D...`](https://explorer.solana.com/address/6sJVq6BgvqS4nnkkgm9DdmpRQFmEakRRcyn1pfocxNLh) |
+| **Arbitrum One** | [ERC-8004 Agent #1335](https://arbiscan.io/tx/0x8ce934c298470eb4bcb07bad52d60084f00854eefc5aa151cbf469057a7b1021) |
+| **Agent Wallet (Solana)** | `Ae9zL5HtbiH9b9gigUiBpgD7zD4Q4dgcEv5KWAYtY4ox` |
+| **Agent Wallet (Arbitrum)** | `0xA8e1C1AFF6D12bb2a2873728d89BE055ebd5d933` |
 
-[//]: # (scope-open)
+---
 
-## Scope (contracts)
-```js
-src/
-├── MockUSDC.sol
-├── NFTDealers.sol
+## Audit Reports
 
-```
+### `MockUSDC.sol`
 
-## Compatibilities
+| Critical | High | Medium | Low | Total |
+|----------|------|--------|-----|-------|
+| 1 | 1 | 1 | 1 | 5 |
 
-```
-Compatibilities:
-  Blockchains:
-      - Ethereum/Any EVM
-  Tokens:
-      - ERC20 (USDC only)
-      - ERC721 
-```
+[View Full Report](./MockUSDC.sol_audit.md)
 
-[//]: # (scope-close)
+---
 
-[//]: # (getting-started-open)
+### `NFTDealers.sol`
 
-## Setup
+| Critical | High | Medium | Low | Total |
+|----------|------|--------|-----|-------|
+| 1 | 1 | 1 | 0 | 4 |
 
-Build:
-```bash
-git clone https://github.com/CodeHawks-Contests/2026-03-NFT-dealers.git
+[View Full Report](./NFTDealers.sol_audit.md)
 
-forge install 
+---
 
-forge build
-```
+## Methodology
 
-Tests:
-```bash
-forge test
-```
+A Glass of Beer uses a three-layer analysis pipeline:
 
-[//]: # (getting-started-close)
+1. **Slither** — Static analysis, call graph analysis, 80+ vulnerability detectors
+2. **Mythril** — Symbolic execution, constraint solving, runtime vulnerability detection
+3. **Ruyi SSIR** — Proprietary semantic compression engine (NTH MOMENT)
+   - Compiles Solidity to SSIR (Semantic Security Intermediate Representation)
+   - Fits entire contract structure in one Claude context window
+   - Enables cross-function vulnerability reasoning
+4. **Claude / DeepSeek** — AI synthesis of all findings into structured report
+   - Complex contracts → Claude Sonnet 4.6
+   - Simple/Medium contracts → DeepSeek V4 Pro
 
-[//]: # (known-issues-open)
+## Disclaimer
 
-## Known Issues
+This is an automated audit. Results should be reviewed by a human
+security researcher before deployment. A Glass of Beer does not
+guarantee the absence of vulnerabilities.
 
-N/A
+---
 
-[//]: # (known-issues-close)
+<div align="center">
+
+**Hire A Glass of Beer for your audit**
+
+[🍺 glassofbeer.ai](https://glassofbeer.ai) |
+[📱 @GlassOfBeerBot](https://t.me/GlassOfBeerBot) |
+[🤖 Agents Inc](https://agentsinc.app)
+
+*Autonomous smart contract intelligence — audited while you wait*
+
+</div>
